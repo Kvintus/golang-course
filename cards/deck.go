@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 type deck []string
@@ -27,7 +29,7 @@ func newDeck() deck {
 func newDeckFromFile(fileName string) deck {
 	contents, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		fmt.Println("Error: ",err)
+		fmt.Println("Error: ", err)
 		os.Exit(1)
 	}
 
@@ -47,6 +49,15 @@ func (d deck) toString() string {
 func (deck deck) print() {
 	for i, card := range deck {
 		fmt.Println(i, card)
+	}
+}
+
+func (deck deck) shuffle() {
+	source := rand.NewSource(time.Now().Unix())
+	generator := rand.New(source)
+	for i := range deck {
+		newPosition := generator.Intn(len(deck) - 1)
+		deck[i], deck[newPosition] = deck[newPosition], deck[i]
 	}
 }
 
