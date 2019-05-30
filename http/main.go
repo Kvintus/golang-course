@@ -14,7 +14,7 @@ func (logWriter) Write(bs []byte) (int, error) {
 	return len(bs), nil
 }
 
-func main() {
+func mainVideo() {
 	resp, err := http.Get("http://google.com")
 	if err != nil {
 		os.Exit(1)
@@ -23,4 +23,9 @@ func main() {
 	lw := logWriter{}
 
 	io.Copy(lw, resp.Body)
+}
+
+func main() {
+	fileName := os.Args[1]
+	ReadFile(fileName)
 }
